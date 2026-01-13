@@ -2,57 +2,93 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Jumpscare Game</title>
+<title>Mini Game</title>
 <style>
-    body {
-        margin: 0;
-        background: black;
-        color: white;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        overflow: hidden;
-    }
-    #start {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        cursor: pointer;
-        font-size: 28px;
-    }
-    #scare {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        z-index: 999;
-    }
-    #scare img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+#game {
+    margin-top: 60px;
+}
+
+.box {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin: 20px;
+    background: #222;
+    border: 3px solid white;
+    font-size: 20px;
+    line-height: 120px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.box:hover {
+    background: #444;
+    transform: scale(1.1);
+}
+
+/* JUMPSCARE */
+#scare {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 999;
+}
+
+#scare img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: shake 0.3s infinite;
+}
+
+@keyframes shake {
+  0% { transform: scale(1.1) translate(0, 0); }
+  25% { transform: scale(1.15) translate(10px, -10px); }
+  50% { transform: scale(1.15) translate(-10px, 10px); }
+  75% { transform: scale(1.15) translate(10px, 10px); }
+  100% { transform: scale(1.1) translate(0, 0); }
+}
 </style>
 </head>
 <body>
 
-<div id="start">KLIK UNTUK MULAI</div>
+<h1>🎁 TEMUKAN KOTAK HARTA 🎁</h1>
+<p>Pilih satu kotak untuk membuka hadiah</p>
+
+<div id="game">
+    <div class="box" onclick="jumpscare()">BOX 1</div>
+    <div class="box" onclick="jumpscare()">BOX 2</div>
+    <div class="box" onclick="jumpscare()">BOX 3</div>
+</div>
 
 <div id="scare">
-    <img src="jumpscare.jpg" alt="JUMPSCARE">
+    <img src="jumpscare.jpg">
 </div>
 
 <script>
-document.getElementById("start").onclick = function () {
-    this.style.display = "none";
+function jumpscare() {
+    const audio = new Audio("scare.mp3");
+    audio.volume = 1.0;
+    audio.play();
 
-    setTimeout(() => {
-        document.getElementById("scare").style.display = "block";
-    }, 3000); // delay 3 detik
-};
+    document.getElementById("game").style.display = "none";
+    document.querySelector("h1").style.display = "none";
+    document.querySelector("p").style.display = "none";
+    document.getElementById("scare").style.display = "block";
+}
 </script>
 
 </body>
